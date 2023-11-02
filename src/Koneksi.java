@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-package aplikasi.penjualan.neatbeans.k04;
+
 
 /**
  *
