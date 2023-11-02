@@ -1,5 +1,11 @@
 
-
+import javax.swing.table.DefaultTableModel;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+import javax.swing.JOptionPane;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -12,6 +18,7 @@ package aplikasi.penjualan.neatbeans.k04;
  */
 public class Form_Penjualan_barang extends javax.swing.JFrame {
 
+     private DefaultTableModel model;
     /**
      * Creates new form Form_Penjualan_barang
      */
@@ -57,7 +64,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         txt_tanggal = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabel_penjualan = new javax.swing.JTable();
+        TabelPenjualan = new javax.swing.JTable();
         btn_tambah = new javax.swing.JButton();
         btn_save = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
@@ -160,7 +167,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(255, 153, 153));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabel_penjualan.setModel(new javax.swing.table.DefaultTableModel(
+        TabelPenjualan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -171,7 +178,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(tabel_penjualan);
+        jScrollPane1.setViewportView(TabelPenjualan);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 20, 696, 144));
 
@@ -220,6 +227,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
     private void loadData(){
         //membuat model
         model = new DefaultTableModel();
@@ -228,7 +236,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         //memberi tahu bahwa data telah kosong
         model.fireTableDataChanged();
         
-        TabelSiswa.setModel(model);
+        TabelPenjualan.setModel(model);
         model.addColumn("NO FAKTUR");
         model.addColumn("TANGGAL PENJUALAN");
         model.addColumn("BAYAR");
@@ -327,6 +335,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTable TabelPenjualan;
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_hitung;
@@ -358,7 +367,6 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTable tabel_penjualan;
     private javax.swing.JTextField txt_bayar;
     private javax.swing.JTextField txt_nofaktur;
     private javax.swing.JTextField txt_sisa;
