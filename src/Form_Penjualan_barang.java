@@ -60,7 +60,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         combopetugas = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txt_petugas = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jComboBox2 = new javax.swing.JComboBox<>();
@@ -128,7 +128,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel4.setText("Nama Petugas");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 90, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 320, -1));
+        getContentPane().add(txt_petugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 320, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -357,11 +357,14 @@ private void kosong(){
     }//GEN-LAST:event_txt_totalActionPerformed
 
     private void btn_tambahitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahitemActionPerformed
-// String nofaktur = txt_nofaktur.getText();
+        String nofaktur = txt_nofaktur.getText();
+        java.util.Date tanggalPenjualan = (java.util.Date) txt_tanggal.getValue();
+        String namapetugas = txt_petugas.getText();
         String namabarang = txtnama.getText();
         String hargajual = txtharga.getText();
         String stok = txtstok.getText();
         String jumlah = txtjumlah.getText();
+        String subtotal = txtsubtotal.getText();
 
         
         if ("".equals(namabarang) || "".equals(hargajual) ||
@@ -375,13 +378,17 @@ private void kosong(){
             
             try{
                 Connection c = Koneksi.getKoneksi();
-                String sql = "INSERT INTO tb_penjualan VALUES (?,?,?,?)";
+                String sql = "INSERT INTO tb_penjualan VALUES (?,?,?,?,?,?,?,?)";
                 PreparedStatement p = c.prepareStatement(sql);
                 
-                p.setString(1, namabarang);
-                p.setString(2, hargajual);
-                p.setString(3, stok);
-                p.setString(4, jumlah);
+                p.setString(1, nofaktur);
+                p.setDate(2, new java.sql.Date(tanggalPenjualan.getTime()));
+                p.setString(3, namapetugas);
+                p.setString(4, namabarang);
+                p.setString(5, hargajual);
+                p.setString(6, stok);
+                p.setString(7, jumlah);
+                p.setString(7, subtotal);
 
                 p.executeUpdate();
                 p.close();
@@ -482,9 +489,9 @@ private void kosong(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField txt_bayar;
     private javax.swing.JTextField txt_nofaktur;
+    private javax.swing.JTextField txt_petugas;
     private javax.swing.JTextField txt_sisa;
     private javax.swing.JFormattedTextField txt_tanggal;
     private javax.swing.JTextField txt_total;
