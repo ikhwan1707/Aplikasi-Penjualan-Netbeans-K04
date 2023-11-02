@@ -68,14 +68,14 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtnama = new javax.swing.JTextField();
+        txtharga = new javax.swing.JTextField();
+        txtstok = new javax.swing.JTextField();
+        txtjumlah = new javax.swing.JTextField();
         btn_hitung = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
-        btntambah = new javax.swing.JButton();
+        txtsubtotal = new javax.swing.JTextField();
+        btn_tambahitem = new javax.swing.JButton();
         txt_tanggal = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -150,10 +150,28 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel9.setText("Jumlah");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 124, -1, -1));
-        jPanel1.add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 28, 280, -1));
-        jPanel1.add(jTextField5, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 130, -1));
-        jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
-        jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, -1, -1));
+
+        txtnama.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtnamaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtnama, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 28, 280, -1));
+        jPanel1.add(txtharga, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 130, -1));
+
+        txtstok.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtstokActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtstok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 90, -1));
+
+        txtjumlah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtjumlahActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtjumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 80, -1));
 
         btn_hitung.setText("Hitung");
         btn_hitung.addActionListener(new java.awt.event.ActionListener() {
@@ -165,15 +183,15 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel10.setText("Sub Total");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
-        jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
+        jPanel1.add(txtsubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
 
-        btntambah.setText("ADD ITEM");
-        btntambah.addActionListener(new java.awt.event.ActionListener() {
+        btn_tambahitem.setText("ADD ITEM");
+        btn_tambahitem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btntambahActionPerformed(evt);
+                btn_tambahitemActionPerformed(evt);
             }
         });
-        jPanel1.add(btntambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
+        jPanel1.add(btn_tambahitem, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 750, 190));
 
@@ -206,6 +224,11 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 750, 170));
 
         btn_tambah.setText("ADD NEW");
+        btn_tambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_tambahActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
 
         btn_save.setText("SAVE TRANSACTION");
@@ -310,7 +333,7 @@ private void kosong(){
     }//GEN-LAST:event_combopetugasActionPerformed
 
     private void btn_hitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hitungActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btn_hitungActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -333,17 +356,17 @@ private void kosong(){
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_totalActionPerformed
 
-    private void btntambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntambahActionPerformed
- String nofaktur = txt_nofaktur.getText();
-        java.util.Date tanggalPenjualan = (java.util.Date) txt_tanggal.getValue();
-        String bayar = txt_bayar.getText();
-        String sisa = txt_sisa.getText();
-        String total = txt_total.getText();
+    private void btn_tambahitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahitemActionPerformed
+// String nofaktur = txt_nofaktur.getText();
+        String namabarang = txtnama.getText();
+        String hargajual = txtharga.getText();
+        String stok = txtstok.getText();
+        String jumlah = txtjumlah.getText();
 
         
-        if ("".equals(nofaktur) || "".equals(tanggalPenjualan) ||
-                "".equals(bayar) ||
-                "".equals(sisa) || "".equals(total))  
+        if ("".equals(namabarang) || "".equals(hargajual) ||
+                "".equals(stok) ||
+                "".equals(jumlah)) 
             
         {   
             JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", 
@@ -352,14 +375,13 @@ private void kosong(){
             
             try{
                 Connection c = Koneksi.getKoneksi();
-                String sql = "INSERT INTO tb_penjualan VALUES (?,?,?,?,?)";
+                String sql = "INSERT INTO tb_penjualan VALUES (?,?,?,?)";
                 PreparedStatement p = c.prepareStatement(sql);
                 
-                p.setString(1, nofaktur);
-                p.setDate(2, new java.sql.Date(tanggalPenjualan.getTime()));
-                p.setString(3, bayar);
-                p.setString(4, sisa);
-                p.setString(5, total);
+                p.setString(1, namabarang);
+                p.setString(2, hargajual);
+                p.setString(3, stok);
+                p.setString(4, jumlah);
 
                 p.executeUpdate();
                 p.close();
@@ -376,11 +398,27 @@ private void kosong(){
             }
         }
           
-    }//GEN-LAST:event_btntambahActionPerformed
+    }//GEN-LAST:event_btn_tambahitemActionPerformed
 
     private void txt_bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_bayarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_bayarActionPerformed
+
+    private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_tambahActionPerformed
+
+    private void txtnamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnamaActionPerformed
+
+    private void txtstokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstokActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtstokActionPerformed
+
+    private void txtjumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtjumlahActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtjumlahActionPerformed
 
     /**
      * @param args the command line arguments
@@ -424,7 +462,7 @@ private void kosong(){
     private javax.swing.JButton btn_hitung;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_tambah;
-    private javax.swing.JButton btntambah;
+    private javax.swing.JButton btn_tambahitem;
     private javax.swing.JComboBox<String> combopetugas;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox2;
@@ -445,15 +483,15 @@ private void kosong(){
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField txt_bayar;
     private javax.swing.JTextField txt_nofaktur;
     private javax.swing.JTextField txt_sisa;
     private javax.swing.JFormattedTextField txt_tanggal;
     private javax.swing.JTextField txt_total;
+    private javax.swing.JTextField txtharga;
+    private javax.swing.JTextField txtjumlah;
+    private javax.swing.JTextField txtnama;
+    private javax.swing.JTextField txtstok;
+    private javax.swing.JTextField txtsubtotal;
     // End of variables declaration//GEN-END:variables
 }
