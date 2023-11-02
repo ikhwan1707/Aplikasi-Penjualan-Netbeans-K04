@@ -6,6 +6,8 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Connection;
 import javax.swing.JOptionPane;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -17,8 +19,21 @@ import javax.swing.JOptionPane;
  * @author lab-4
  */
 public class Form_Penjualan_barang extends javax.swing.JFrame {
+    
+    String Tanggal;
+    private DefaultTableModel model;
 
-     private DefaultTableModel model;
+    public void totalBiaya(){
+        int jumlahBaris = TabelPenjualan.getRowCount();
+        int totalBiaya = 0;
+        int jumlahBarang, hargaBarang;
+        for (int i = 0; i < jumlahBaris; i++) {
+            jumlahBarang = Integer.parseInt(TabelPenjualan.getValueAt(i, 3).toString());
+            hargaBarang = Integer.parseInt(TabelPenjualan.getValueAt(i, 4).toString());
+            totalBiaya = totalBiaya + (jumlahBarang * hargaBarang);
+        }
+        txt_total.setText(String.valueOf(totalBiaya));
+    }
     /**
      * Creates new form Form_Penjualan_barang
      */
@@ -162,6 +177,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 750, 190));
 
+        txt_tanggal.setEnabled(false);
         txt_tanggal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_tanggalActionPerformed(evt);
@@ -214,6 +230,12 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel13.setText("Total Rp");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 580, -1, -1));
+
+        txt_bayar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_bayarActionPerformed(evt);
+            }
+        });
         getContentPane().add(txt_bayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, 210, -1));
 
         txt_sisa.addActionListener(new java.awt.event.ActionListener() {
@@ -355,6 +377,10 @@ private void kosong(){
         }
           
     }//GEN-LAST:event_btntambahActionPerformed
+
+    private void txt_bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_bayarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_bayarActionPerformed
 
     /**
      * @param args the command line arguments
