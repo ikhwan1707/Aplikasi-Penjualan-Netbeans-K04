@@ -1,3 +1,5 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -15,6 +17,9 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
      */
     public Form_Penjualan_barang() {
         initComponents();
+        loadData();
+//        kosong();
+//        TampilComboJenis();
     }
 
     /**
@@ -27,10 +32,10 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_nofaktur = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        combopetugas = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
@@ -45,24 +50,24 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jTextField5 = new javax.swing.JTextField();
         jTextField6 = new javax.swing.JTextField();
         jTextField7 = new javax.swing.JTextField();
-        jButton2 = new javax.swing.JButton();
+        btn_hitung = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        txt_tanggal = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        tabel_penjualan = new javax.swing.JTable();
+        btn_tambah = new javax.swing.JButton();
+        btn_save = new javax.swing.JButton();
+        btn_cancel = new javax.swing.JButton();
+        btn_close = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        txt_bayar = new javax.swing.JTextField();
+        txt_sisa = new javax.swing.JTextField();
+        txt_total = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,12 +75,12 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jLabel1.setText("No.Faktur");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 45, -1, -1));
 
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        txt_nofaktur.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                txt_nofakturActionPerformed(evt);
             }
         });
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 42, 160, -1));
+        getContentPane().add(txt_nofaktur, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 42, 160, -1));
 
         jButton1.setText("CARI DATA");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -88,13 +93,13 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jLabel2.setText("ID Petugas");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Petugas" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        combopetugas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Petugas" }));
+        combopetugas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                combopetugasActionPerformed(evt);
             }
         });
-        getContentPane().add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, -1));
+        getContentPane().add(combopetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, -1));
 
         jLabel3.setText("Tanggal Penjualan");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
@@ -128,13 +133,13 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jPanel1.add(jTextField6, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, -1, -1));
         jPanel1.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, -1, -1));
 
-        jButton2.setText("Hitung");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btn_hitung.setText("Hitung");
+        btn_hitung.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btn_hitungActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, -1, -1));
+        jPanel1.add(btn_hitung, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 120, -1, -1));
 
         jLabel10.setText("Sub Total");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
@@ -144,12 +149,18 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 750, 190));
-        getContentPane().add(jFormattedTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 160, -1));
+
+        txt_tanggal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_tanggalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txt_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 160, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 153));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_penjualan.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -160,28 +171,28 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabel_penjualan);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 20, 696, 144));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 750, 170));
 
-        jButton4.setText("ADD NEW");
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
+        btn_tambah.setText("ADD NEW");
+        getContentPane().add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
 
-        jButton5.setText("SAVE TRANSACTION");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
+        btn_save.setText("SAVE TRANSACTION");
+        getContentPane().add(btn_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
 
-        jButton6.setText("CANCEL");
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 530, -1, -1));
+        btn_cancel.setText("CANCEL");
+        getContentPane().add(btn_cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 530, -1, -1));
 
-        jButton7.setText("CLOSE");
-        jButton7.addActionListener(new java.awt.event.ActionListener() {
+        btn_close.setText("CLOSE");
+        btn_close.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton7ActionPerformed(evt);
+                btn_closeActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton7, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, -1, -1));
+        getContentPane().add(btn_close, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 530, -1, -1));
 
         jLabel11.setText("Bayar Rp");
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 520, -1, -1));
@@ -191,32 +202,94 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel13.setText("Total Rp");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 580, -1, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, 210, -1));
-        getContentPane().add(jTextField9, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 550, 210, -1));
-        getContentPane().add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 580, 210, -1));
+        getContentPane().add(txt_bayar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, 210, -1));
+
+        txt_sisa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_sisaActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txt_sisa, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 550, 210, -1));
+
+        txt_total.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_totalActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txt_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 580, 210, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private void loadData(){
+        //membuat model
+        model = new DefaultTableModel();
+        //menghapus seluruh data
+        model.getDataVector().removeAllElements();
+        //memberi tahu bahwa data telah kosong
+        model.fireTableDataChanged();
+        
+        TabelSiswa.setModel(model);
+        model.addColumn("NO FAKTUR");
+        model.addColumn("TANGGAL PENJUALAN");
+        model.addColumn("BAYAR");
+        model.addColumn("SISA");
+        model.addColumn("TOTAL");
+        
+        try{
+            
+            String sql = "SELECT *FROM tb_penjualan";
+            
+            Connection c = Koneksi.getKoneksi();
+            Statement s = c.createStatement();
+            ResultSet r = s.executeQuery(sql);
+            
+            while(r.next()){
+                model.addRow(new Object[]{
+                    r.getString(1),
+                    r.getString(2),
+                    r.getDate(3),
+                    r.getString(4),
+                    r.getString(5)
+                
+                });
+            }
+        TabelPenjualan.setModel(model);
+        }catch(SQLException e){
+            System.out.println("Terjadi Error");
+    }
+}
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void txt_nofakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nofakturActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_txt_nofakturActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void combopetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combopetugasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_combopetugasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void btn_hitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hitungActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_btn_hitungActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+    private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    }//GEN-LAST:event_btn_closeActionPerformed
+
+    private void txt_tanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_tanggalActionPerformed
+
+    private void txt_sisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sisaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_sisaActionPerformed
+
+    private void txt_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_totalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_totalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -254,16 +327,15 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_close;
+    private javax.swing.JButton btn_hitung;
+    private javax.swing.JButton btn_save;
+    private javax.swing.JButton btn_tambah;
+    private javax.swing.JComboBox<String> combopetugas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -280,16 +352,17 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTable tabel_penjualan;
+    private javax.swing.JTextField txt_bayar;
+    private javax.swing.JTextField txt_nofaktur;
+    private javax.swing.JTextField txt_sisa;
+    private javax.swing.JFormattedTextField txt_tanggal;
+    private javax.swing.JTextField txt_total;
     // End of variables declaration//GEN-END:variables
 }
