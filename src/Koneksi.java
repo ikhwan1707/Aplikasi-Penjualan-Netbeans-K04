@@ -24,7 +24,7 @@ public class Koneksi {
         {
             
     try {
-    String url = "jdbc:mysql://localhost:3306/crud_sederhana_xiia";
+    String url = "jdbc:mysql://localhost:3306/db_penjualan_barang_pas_xiia";
     String user ="root";
     String password = "";
     DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());

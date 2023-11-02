@@ -60,7 +60,7 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         btn_hitung = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
-        jButton3 = new javax.swing.JButton();
+        btntambah = new javax.swing.JButton();
         txt_tanggal = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -152,8 +152,13 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
         jPanel1.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
 
-        jButton3.setText("ADD ITEM");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
+        btntambah.setText("ADD ITEM");
+        btntambah.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntambahActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btntambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 750, 190));
 
@@ -266,7 +271,14 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
             System.out.println("Terjadi Error");
     }
 }
-
+    
+private void kosong(){
+        txt_nofaktur.setText(null);
+        txt_tanggal.setText(null);
+        txt_bayar.setText(null);
+        txt_sisa.setText(null);
+        txt_total.setText(null);
+}
     private void txt_nofakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nofakturActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nofakturActionPerformed
@@ -298,6 +310,51 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     private void txt_totalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_totalActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_totalActionPerformed
+
+    private void btntambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntambahActionPerformed
+ String nofaktur = txt_nofaktur.getText();
+        java.util.Date tanggalPenjualan = (java.util.Date) txt_tanggal.getValue();
+        String bayar = txt_bayar.getText();
+        String sisa = txt_sisa.getText();
+        String total = txt_total.getText();
+
+        
+        if ("".equals(nofaktur) || "".equals(tanggalPenjualan) ||
+                "".equals(bayar) ||
+                "".equals(sisa) || "".equals(total))  
+            
+        {   
+            JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", 
+                 "Error", JOptionPane.WARNING_MESSAGE);   
+        } else {
+            
+            try{
+                Connection c = Koneksi.getKoneksi();
+                String sql = "INSERT INTO tb_penjualan VALUES (?,?,?,?,?)";
+                PreparedStatement p = c.prepareStatement(sql);
+                
+                p.setString(1, nofaktur);
+                p.setDate(2, new java.sql.Date(tanggalPenjualan.getTime()));
+                p.setString(3, bayar);
+                p.setString(4, sisa);
+                p.setString(5, total);
+
+                p.executeUpdate();
+                p.close();
+                
+                JOptionPane.showMessageDialog(null,
+                        "Penyimpanan Data Berhasil");
+                
+            }catch(SQLException e){
+                JOptionPane.showMessageDialog(this,
+                        e.getMessage());
+            }finally{
+                loadData();
+                kosong();
+            }
+        }
+          
+    }//GEN-LAST:event_btntambahActionPerformed
 
     /**
      * @param args the command line arguments
@@ -341,9 +398,9 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
     private javax.swing.JButton btn_hitung;
     private javax.swing.JButton btn_save;
     private javax.swing.JButton btn_tambah;
+    private javax.swing.JButton btntambah;
     private javax.swing.JComboBox<String> combopetugas;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton3;
     private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
