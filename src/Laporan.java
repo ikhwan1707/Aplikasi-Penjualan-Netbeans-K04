@@ -1,3 +1,18 @@
+import javax.swing.JOptionPane;
+import java.util.HashMap;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+import java.io.File;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.sql.*;
+import javax.swing.JOptionPane; 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -33,7 +48,7 @@ public class Laporan extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton4 = new javax.swing.JButton();
+        addnew = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,8 +74,13 @@ public class Laporan extends javax.swing.JFrame {
 
         jTextField1.setBackground(new java.awt.Color(153, 255, 255));
 
-        jButton4.setBackground(new java.awt.Color(255, 102, 102));
-        jButton4.setText("CETAK");
+        addnew.setBackground(new java.awt.Color(255, 102, 102));
+        addnew.setText("CETAK");
+        addnew.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addnewActionPerformed(evt);
+            }
+        });
 
         jButton5.setBackground(new java.awt.Color(255, 102, 102));
         jButton5.setText("CLOSE");
@@ -90,7 +110,7 @@ public class Laporan extends javax.swing.JFrame {
                                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 366, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addComponent(jLabel2)))))
                         .addGap(27, 27, 27)
-                        .addComponent(jButton4)))
+                        .addComponent(addnew)))
                 .addContainerGap(231, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -104,13 +124,13 @@ public class Laporan extends javax.swing.JFrame {
                 .addComponent(jButton2)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
-                .addGap(66, 66, 66)
+                .addGap(75, 75, 75)
                 .addComponent(jLabel2)
                 .addGap(35, 35, 35)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(addnew))
                 .addGap(30, 30, 30)
                 .addComponent(jButton5)
                 .addContainerGap(129, Short.MAX_VALUE))
@@ -134,6 +154,25 @@ public class Laporan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void addnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addnewActionPerformed
+        // TODO add your handling code here:
+        try{
+
+      String NamaFile="src/report/RptBarang.jasper";
+      HashMap parameter = new HashMap();
+      Class.forName(driver);
+      Connection con = DriverManager.getConnection(database,user,pass);
+      File reportfile = new File(NamaFile);
+      JasperReport jasperReport =(JasperReport)JRLoader.loadObject(reportfile.getPath());
+      JasperPrint jasperPrint =JasperFillManager.fillReport(jasperReport, parameter, con);
+      JasperViewer.viewReport(jasperPrint,false);
+      JasperViewer.setDefaultLookAndFeelDecorated(true);
+      } catch (Exception e) {
+       JOptionPane.showMessageDialog(null, "Data tidak dapat dicetak !",
+ "Cetak Data",JOptionPane.ERROR_MESSAGE);
+ } 
+    }//GEN-LAST:event_addnewActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,10 +210,10 @@ public class Laporan extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addnew;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
