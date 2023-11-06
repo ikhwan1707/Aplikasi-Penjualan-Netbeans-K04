@@ -19,30 +19,37 @@ import java.text.SimpleDateFormat;
  * @author lab-4
  */
 public class Form_Penjualan_barang extends javax.swing.JFrame {
+Connection conn;
+Statement cn;
     
-    String Tanggal;
     private DefaultTableModel model;
-
-    public void totalBiaya(){
-        int jumlahBaris = TabelPenjualan.getRowCount();
-        int totalBiaya = 0;
-        int jumlahBarang, hargaBarang;
-        for (int i = 0; i < jumlahBaris; i++) {
-            jumlahBarang = Integer.parseInt(TabelPenjualan.getValueAt(i, 3).toString());
-            hargaBarang = Integer.parseInt(TabelPenjualan.getValueAt(i, 4).toString());
-            totalBiaya = totalBiaya + (jumlahBarang * hargaBarang);
-        }
-        txt_total.setText(String.valueOf(totalBiaya));
-    }
+    
     /**
      * Creates new form Form_Penjualan_barang
      */
     public Form_Penjualan_barang() {
         initComponents();
-        loadData();
-//        kosong();
-//        TampilComboJenis();
+          Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize=this.getSize();
+        if(frameSize.height > screenSize.height){
+            frameSize.height=screenSize.height;
+        }
+        if(frameSize.width > screenSize.width){
+            frameSize.width=screenSize.width;
+        }
+        this.setLocation((screenSize.width - frameSize.width) / 2,
+        (screenSize.height = screenSize.height) / 10);
+      
+        table.setModel(tableModel);
+        Tabel(table, new int[]{90,300,90,60,60,90});
+        setDefaultTable();
+        TanggalOtomatis();
+        SetEditOff();
+        TampilComboBarang();
+        TampilComboPetugas();
+        tampilfaktur();
     }
+        
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,33 +62,33 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         txt_nofaktur = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_cari = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        combopetugas = new javax.swing.JComboBox<>();
+        id_petugas = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        txt_petugas = new javax.swing.JTextField();
+        txt_namapetugas = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        kode_barang = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        txtnama = new javax.swing.JTextField();
-        txtharga = new javax.swing.JTextField();
-        txtstok = new javax.swing.JTextField();
-        txtjumlah = new javax.swing.JTextField();
+        txt_namabarang = new javax.swing.JTextField();
+        txt_hargajual = new javax.swing.JTextField();
+        txt_stok = new javax.swing.JTextField();
+        txt_jumlah = new javax.swing.JTextField();
         btn_hitung = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        txtsubtotal = new javax.swing.JTextField();
-        btn_tambahitem = new javax.swing.JButton();
-        txt_tanggal = new javax.swing.JFormattedTextField();
+        txt_subtotal = new javax.swing.JTextField();
+        btn_additem = new javax.swing.JButton();
+        txt_tanggalpenjualan = new javax.swing.JFormattedTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelPenjualan = new javax.swing.JTable();
         btn_tambah = new javax.swing.JButton();
-        btn_save = new javax.swing.JButton();
+        btn_savetransaction = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
         btn_close = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
@@ -104,31 +111,36 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         });
         getContentPane().add(txt_nofaktur, new org.netbeans.lib.awtextra.AbsoluteConstraints(107, 42, 160, -1));
 
-        jButton1.setText("CARI DATA");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btn_cari.setText("CARI DATA");
+        btn_cari.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btn_cariActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, -1, -1));
+        getContentPane().add(btn_cari, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, -1, -1));
 
         jLabel2.setText("ID Petugas");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        combopetugas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Petugas" }));
-        combopetugas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                combopetugasActionPerformed(evt);
+        id_petugas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Petugas" }));
+        id_petugas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                id_petugasItemStateChanged(evt);
             }
         });
-        getContentPane().add(combopetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, -1));
+        id_petugas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                id_petugasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(id_petugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, -1));
 
         jLabel3.setText("Tanggal Penjualan");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
 
         jLabel4.setText("Nama Petugas");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 90, 90, -1));
-        getContentPane().add(txt_petugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 320, -1));
+        getContentPane().add(txt_namapetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 90, 320, -1));
 
         jPanel1.setBackground(new java.awt.Color(0, 153, 153));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -136,8 +148,8 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jLabel5.setText("Kode Barang");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 31, -1, -1));
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Barang" }));
-        jPanel1.add(jComboBox2, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 28, 160, -1));
+        kode_barang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Barang" }));
+        jPanel1.add(kode_barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 28, 160, -1));
 
         jLabel6.setText("Nama Barang");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 31, -1, -1));
@@ -151,27 +163,27 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         jLabel9.setText("Jumlah");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(284, 124, -1, -1));
 
-        txtnama.addActionListener(new java.awt.event.ActionListener() {
+        txt_namabarang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtnamaActionPerformed(evt);
+                txt_namabarangActionPerformed(evt);
             }
         });
-        jPanel1.add(txtnama, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 28, 280, -1));
-        jPanel1.add(txtharga, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 130, -1));
+        jPanel1.add(txt_namabarang, new org.netbeans.lib.awtextra.AbsoluteConstraints(358, 28, 280, -1));
+        jPanel1.add(txt_hargajual, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 60, 130, -1));
 
-        txtstok.addActionListener(new java.awt.event.ActionListener() {
+        txt_stok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtstokActionPerformed(evt);
+                txt_stokActionPerformed(evt);
             }
         });
-        jPanel1.add(txtstok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 90, -1));
+        jPanel1.add(txt_stok, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 90, 90, -1));
 
-        txtjumlah.addActionListener(new java.awt.event.ActionListener() {
+        txt_jumlah.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtjumlahActionPerformed(evt);
+                txt_jumlahActionPerformed(evt);
             }
         });
-        jPanel1.add(txtjumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 80, -1));
+        jPanel1.add(txt_jumlah, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 120, 80, -1));
 
         btn_hitung.setText("Hitung");
         btn_hitung.addActionListener(new java.awt.event.ActionListener() {
@@ -183,25 +195,25 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         jLabel10.setText("Sub Total");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
-        jPanel1.add(txtsubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
+        jPanel1.add(txt_subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
 
-        btn_tambahitem.setText("ADD ITEM");
-        btn_tambahitem.addActionListener(new java.awt.event.ActionListener() {
+        btn_additem.setText("ADD ITEM");
+        btn_additem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_tambahitemActionPerformed(evt);
+                btn_additemActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_tambahitem, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
+        jPanel1.add(btn_additem, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 160, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 750, 190));
 
-        txt_tanggal.setEnabled(false);
-        txt_tanggal.addActionListener(new java.awt.event.ActionListener() {
+        txt_tanggalpenjualan.setEnabled(false);
+        txt_tanggalpenjualan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txt_tanggalActionPerformed(evt);
+                txt_tanggalpenjualanActionPerformed(evt);
             }
         });
-        getContentPane().add(txt_tanggal, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 160, -1));
+        getContentPane().add(txt_tanggalpenjualan, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 40, 160, -1));
 
         jPanel2.setBackground(new java.awt.Color(255, 153, 153));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -236,8 +248,8 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
         });
         getContentPane().add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
 
-        btn_save.setText("SAVE TRANSACTION");
-        getContentPane().add(btn_save, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
+        btn_savetransaction.setText("SAVE TRANSACTION");
+        getContentPane().add(btn_savetransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
 
         btn_cancel.setText("CANCEL");
         getContentPane().add(btn_cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 530, -1, -1));
@@ -282,76 +294,111 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    private javax.swing.table.DefaultTableModel tableModel=getDefaultTabelModel(); 
+     
+     private void Tabel(javax.swing.JTable tb, int lebar[] ) { 
+        tb.setAutoResizeMode(TabelPenjualan.AUTO_RESIZE_OFF); 
+        int kolom=tb.getColumnCount(); 
+        for(int i=0;i < kolom;i++) { 
+            javax.swing.table.TableColumn tbc=tb.getColumnModel().getColumn(i); 
+            tbc.setPreferredWidth(lebar[i]); 
+            tb.setRowHeight(17); 
+        } 
+    } 
+      
+        private javax.swing.table.DefaultTableModel getDefaultTabelModel() { 
+        return new javax.swing.table.DefaultTableModel( 
+        new Object[][] {}, 
+        new String [] {"Kode Barang","Nama Barang","Harga Jual","Stok","Jumlah","Sub Total"} 
+        ){ 
+        boolean[] canEdit = new boolean[]{ 
+        false, false, false, false 
+        }; 
+        public  boolean isCellEditable(int  rowIndex, int columnIndex){ return canEdit[columnIndex]; 
+        } 
+       };    
+    } 
+  
+    String data[]=new String[6]; 
+    private void setDefaultTable() { 
+    String stat =""; 
+    try { 
+    koneksi();
+    String     SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual," +               
+                    "tblbarang.stok,tbldetailpenjualan.jumlah,tbldetailpenjualan.subtotal,tblpenjualan.nofaktur " + 
+                     "FROM tblbarang,tbldetailpenjualan,tblpenjualan WHERE tblbarang.kodebarang=tbldetailpenjualan.kodebarang " + 
+                    "AND tb_penjualan.nofaktur=tbldetailpenjualan.nofaktur" + 
+                     "AND tbldetailpenjualan.nofaktur='"+txt_nofaktur.getText()+"'"; 
+      try (ResultSet res = cn.executeQuery(SQL)) {
+          while(res.next()){
+              data[0] = res.getString(1);
+              data[1] = res.getString(2);
+              data[2] = res.getString(3);
+              data[3] = res.getString(4);
+              data[4] = res.getString(5);
+              data[5] = res.getString(6);
+              tableModel.addRow(data);
+          }
+      } 
+        cn.close(); 
+        conn.close(); 
+        } catch (Exception ex) { 
+            System.err.println(ex.getMessage()); 
+        } 
+    } 
+
     
-    private void loadData(){
-        //membuat model
-        model = new DefaultTableModel();
-        //menghapus seluruh data
-        model.getDataVector().removeAllElements();
-        //memberi tahu bahwa data telah kosong
-        model.fireTableDataChanged();
-        
-        TabelPenjualan.setModel(model);
-        model.addColumn("NO FAKTUR");
-        model.addColumn("TANGGAL PENJUALAN");
-        model.addColumn("BAYAR");
-        model.addColumn("SISA");
-        model.addColumn("TOTAL");
-        
-        try{
-            
-            String sql = "SELECT *FROM tb_penjualan";
-            
-            Connection c = Koneksi.getKoneksi();
-            Statement s = c.createStatement();
-            ResultSet r = s.executeQuery(sql);
-            
-            while(r.next()){
-                model.addRow(new Object[]{
-                    r.getString(1),
-                    r.getString(2),
-                    r.getDate(3),
-                    r.getString(4),
-                    r.getString(5)
-                
-                });
-            }
-        TabelPenjualan.setModel(model);
-        }catch(SQLException e){
-            System.out.println("Terjadi Error");
-    }
-}
+    private void TampilGridDetail(){
+    String stat ="";
+    try {
+        koneksi();
+        String     SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual,"
+                         +"tblbarang.stok,tbldetailpenjualan.jumlah,tbldetailpenjualan.subtotal,tblpenjualan.nofaktur " +
+                         "FROM tblbarang, tbldetailpenjualan, tblpenjualan " +
+                         "WHERE tblbarang.kodebarang=tbldetailpenjualan.kodebarang " +
+                         "AND tblpenjualan.nofaktur=tbldetailpenjualan.nofaktur " +
+                         "AND tbldetailpenjualan.nofaktur='" + txt_nofaktur.getText() + "'";
+      try (ResultSet res = cn.executeQuery(SQL)) {
+          while(res.next()){
+              data[0] = res.getString(1);
+              data[1] = res.getString(2);
+              data[2] = res.getString(3);
+              data[3] = res.getString(4);
+              data[4] = res.getString(5);
+              data[5] = res.getString(6);
+              tableModel.addRow(data);
+          }
+      }
+        cn.close();
+        conn.close();
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }   
+  } 
     
-private void kosong(){
-        txt_nofaktur.setText(null);
-        txt_tanggal.setText(null);
-        txt_bayar.setText(null);
-        txt_sisa.setText(null);
-        txt_total.setText(null);
-}
     private void txt_nofakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nofakturActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nofakturActionPerformed
 
-    private void combopetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_combopetugasActionPerformed
+    private void id_petugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_petugasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_combopetugasActionPerformed
+    }//GEN-LAST:event_id_petugasActionPerformed
 
     private void btn_hitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hitungActionPerformed
 
     }//GEN-LAST:event_btn_hitungActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btn_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btn_cariActionPerformed
 
     private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_closeActionPerformed
 
-    private void txt_tanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggalActionPerformed
+    private void txt_tanggalpenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggalpenjualanActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txt_tanggalActionPerformed
+    }//GEN-LAST:event_txt_tanggalpenjualanActionPerformed
 
     private void txt_sisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_sisaActionPerformed
         // TODO add your handling code here:
@@ -361,57 +408,11 @@ private void kosong(){
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_totalActionPerformed
 
-    private void btn_tambahitemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahitemActionPerformed
-        String nofaktur = txt_nofaktur.getText();
-        java.util.Date tanggalPenjualan = (java.util.Date) txt_tanggal.getValue();
-        String namapetugas = txt_petugas.getText();
-        String namabarang = txtnama.getText();
-        String hargajual = txtharga.getText();
-        String stok = txtstok.getText();
-        String jumlah = txtjumlah.getText();
-        String subtotal = txtsubtotal.getText();
+    private void btn_additemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_additemActionPerformed
+       
+    }//GEN-LAST:event_btn_additemActionPerformed
 
-        
-        if ("".equals(namabarang) || "".equals(hargajual) ||
-                "".equals(stok) ||
-                "".equals(jumlah)) 
-            
-        {   
-            JOptionPane.showMessageDialog(this, "Harap Lengkapi Data", 
-                 "Error", JOptionPane.WARNING_MESSAGE);   
-        } else {
-            
-            try{
-                Connection c = Koneksi.getKoneksi();
-                String sql = "INSERT INTO tb_penjualan VALUES (?,?,?,?,?,?,?,?)";
-                PreparedStatement p = c.prepareStatement(sql);
-                
-                p.setString(1, nofaktur);
-                p.setDate(2, new java.sql.Date(tanggalPenjualan.getTime()));
-                p.setString(3, namapetugas);
-                p.setString(4, namabarang);
-                p.setString(5, hargajual);
-                p.setString(6, stok);
-                p.setString(7, jumlah);
-                p.setString(7, subtotal);
-
-                p.executeUpdate();
-                p.close();
-                
-                JOptionPane.showMessageDialog(null,
-                        "Penyimpanan Data Berhasil");
-                
-            }catch(SQLException e){
-                JOptionPane.showMessageDialog(this,
-                        e.getMessage());
-            }finally{
-                loadData();
-                kosong();
-            }
-        }
-          
-    }//GEN-LAST:event_btn_tambahitemActionPerformed
-
+    
     private void txt_bayarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_bayarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_bayarActionPerformed
@@ -420,23 +421,81 @@ private void kosong(){
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_tambahActionPerformed
 
-    private void txtnamaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtnamaActionPerformed
+    private void txt_namabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namabarangActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtnamaActionPerformed
+    }//GEN-LAST:event_txt_namabarangActionPerformed
 
-    private void txtstokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtstokActionPerformed
+    private void txt_stokActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_stokActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtstokActionPerformed
+    }//GEN-LAST:event_txt_stokActionPerformed
 
-    private void txtjumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtjumlahActionPerformed
+    private void txt_jumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_jumlahActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtjumlahActionPerformed
+    }//GEN-LAST:event_txt_jumlahActionPerformed
 
     private void TabelPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPenjualanMouseClicked
         
-       
-                                 
+                       
     }//GEN-LAST:event_TabelPenjualanMouseClicked
+    public void BersihData(){ 
+     tableModel.setRowCount(0); 
+   //  NoFaktur.setText(""); 
+     txt_namapetugas.setText(""); 
+     id_petugas.setSelectedIndex(0); 
+     kode_barang.setSelectedIndex(0); 
+     txt_namabarang.setText("");    
+     txt_hargajual.setText(""); 
+     txt_jumlah.setText(""); 
+     txt_stok.setText(""); 
+     txt_bayar.setText("0"); 
+     txt_sisa.setText("0"); 
+     txt_total.setText("0"); 
+     txt_subtotal.setText("0"); 
+  } 
+     public void BersihDetail(){ 
+     kode_barang.setSelectedIndex(0); 
+     txt_namabarang.setText("");   
+     txt_hargajual.setText(""); 
+     txt_stok.setText(""); 
+     txt_jumlah.setText(""); 
+     txt_subtotal.setText("0"); 
+     } 
+      
+     public void SetEditOff(){ 
+     txt_nofaktur.setEnabled(false); 
+     txt_tanggalpenjualan.setEnabled(false); 
+     id_petugas.setEnabled(false); 
+     kode_barang.setEnabled(false); 
+     txt_jumlah.setEnabled(false); 
+     btn_hitung.setEnabled(false); 
+     btn_cari.setEnabled(false); 
+     btn_additem.setEnabled(false); 
+     } 
+      
+     public void SetEditOn(){ 
+     txt_nofaktur.setEnabled(true); 
+     txt_tanggalpenjualan.setEnabled(true); 
+     id_petugas.setEnabled(true); 
+     kode_barang.setEnabled(true); 
+     txt_jumlah.setEnabled(true); 
+     btn_savetransaction.setEnabled(true); 
+     btn_cari.setEnabled(true); 
+     btn_hitung.setEnabled(true); 
+     btn_additem.setEnabled(true); 
+     }  
+     
+     
+    private void id_petugasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_id_petugasItemStateChanged
+    try {      
+    koneksi();
+    String     SQL = "SELECT * FROM tblpetugas where idpetugas='"+ 
+    id_petugas.getSelectedItem().toString()+"'"; 
+    ResultSet  res = cn.executeQuery(SQL); 
+    res.absolute(1); 
+    NamaPetugas.setText(res.getString("namapetugas")); 
+        } catch (SQLException ex) { 
+        }                
+    }//GEN-LAST:event_id_petugasItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -475,15 +534,14 @@ private void kosong(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TabelPenjualan;
+    private javax.swing.JButton btn_additem;
     private javax.swing.JButton btn_cancel;
+    private javax.swing.JButton btn_cari;
     private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_hitung;
-    private javax.swing.JButton btn_save;
+    private javax.swing.JButton btn_savetransaction;
     private javax.swing.JButton btn_tambah;
-    private javax.swing.JButton btn_tambahitem;
-    private javax.swing.JComboBox<String> combopetugas;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> id_petugas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -500,16 +558,17 @@ private void kosong(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> kode_barang;
     private javax.swing.JTextField txt_bayar;
+    private javax.swing.JTextField txt_hargajual;
+    private javax.swing.JTextField txt_jumlah;
+    private javax.swing.JTextField txt_namabarang;
+    private javax.swing.JTextField txt_namapetugas;
     private javax.swing.JTextField txt_nofaktur;
-    private javax.swing.JTextField txt_petugas;
     private javax.swing.JTextField txt_sisa;
-    private javax.swing.JFormattedTextField txt_tanggal;
+    private javax.swing.JTextField txt_stok;
+    private javax.swing.JTextField txt_subtotal;
+    private javax.swing.JFormattedTextField txt_tanggalpenjualan;
     private javax.swing.JTextField txt_total;
-    private javax.swing.JTextField txtharga;
-    private javax.swing.JTextField txtjumlah;
-    private javax.swing.JTextField txtnama;
-    private javax.swing.JTextField txtstok;
-    private javax.swing.JTextField txtsubtotal;
     // End of variables declaration//GEN-END:variables
 }
