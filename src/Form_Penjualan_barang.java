@@ -217,9 +217,14 @@ public class Form_Penjualan_barang extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TabelPenjualan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TabelPenjualanMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(TabelPenjualan);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(21, 20, 696, 144));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 696, 144));
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 750, 170));
 
@@ -426,6 +431,31 @@ private void kosong(){
     private void txtjumlahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtjumlahActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtjumlahActionPerformed
+
+    private void TabelPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPenjualanMouseClicked
+        
+        int baris = TabelPenjualan.getSelectedRow();
+         
+         if(baris == -1){
+             
+             return;
+         }
+         
+         String nis = TabelPenjualan.getValueAt(baris, 0).toString();
+         txt_nofaktur.setText(nis);
+         java.util.Date tanggalPenjualan = (java.util.Date) TabelPenjualan.getValueAt(baris, 2);
+         txt_tanggal.setValue(tanggalPenjualan);
+         String namapetugas = TabelPenjualan.getValueAt(baris, 1).toString();
+         txt_petugas.setText(namapetugas);
+         String namabarang = TabelPenjualan.getValueAt(baris, 4).toString();
+         txtnama.setText(namabarang);
+         
+         String hargajual = TabelPenjualan.getValueAt(baris, 4).toString();
+         txtnama.setText(namabarang);
+         String namabarang = TabelPenjualan.getValueAt(baris, 4).toString();
+         txtnama.setText(namabarang);
+                                 
+    }//GEN-LAST:event_TabelPenjualanMouseClicked
 
     /**
      * @param args the command line arguments
