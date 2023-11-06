@@ -434,26 +434,7 @@ private void kosong(){
 
     private void TabelPenjualanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TabelPenjualanMouseClicked
         
-        int baris = TabelPenjualan.getSelectedRow();
-         
-         if(baris == -1){
-             
-             return;
-         }
-         
-         String nis = TabelPenjualan.getValueAt(baris, 0).toString();
-         txt_nofaktur.setText(nis);
-         java.util.Date tanggalPenjualan = (java.util.Date) TabelPenjualan.getValueAt(baris, 2);
-         txt_tanggal.setValue(tanggalPenjualan);
-         String namapetugas = TabelPenjualan.getValueAt(baris, 1).toString();
-         txt_petugas.setText(namapetugas);
-         String namabarang = TabelPenjualan.getValueAt(baris, 4).toString();
-         txtnama.setText(namabarang);
-         
-         String hargajual = TabelPenjualan.getValueAt(baris, 4).toString();
-         txtnama.setText(namabarang);
-         String namabarang = TabelPenjualan.getValueAt(baris, 4).toString();
-         txtnama.setText(namabarang);
+       
                                  
     }//GEN-LAST:event_TabelPenjualanMouseClicked
 
