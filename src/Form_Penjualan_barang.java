@@ -51,6 +51,10 @@ Statement cn;
     }
         
 
+    public void TanggalOtomatis(){
+      Date tanggal = new Date();
+      txt_tanggalpenjualan.setText(""+ (String.format("%1$td/%1$tb/%1$tY",tanggal)));
+  }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +68,7 @@ Statement cn;
         txt_nofaktur = new javax.swing.JTextField();
         btn_cari = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        id_petugas = new javax.swing.JComboBox<>();
+        IDPetugas = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txt_namapetugas = new javax.swing.JTextField();
@@ -87,7 +91,7 @@ Statement cn;
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TabelPenjualan = new javax.swing.JTable();
-        btn_tambah = new javax.swing.JButton();
+        btn_addnew = new javax.swing.JButton();
         btn_savetransaction = new javax.swing.JButton();
         btn_cancel = new javax.swing.JButton();
         btn_close = new javax.swing.JButton();
@@ -122,18 +126,18 @@ Statement cn;
         jLabel2.setText("ID Petugas");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, -1, -1));
 
-        id_petugas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Petugas" }));
-        id_petugas.addItemListener(new java.awt.event.ItemListener() {
+        IDPetugas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Petugas" }));
+        IDPetugas.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                id_petugasItemStateChanged(evt);
+                IDPetugasItemStateChanged(evt);
             }
         });
-        id_petugas.addActionListener(new java.awt.event.ActionListener() {
+        IDPetugas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                id_petugasActionPerformed(evt);
+                IDPetugasActionPerformed(evt);
             }
         });
-        getContentPane().add(id_petugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, -1));
+        getContentPane().add(IDPetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 160, -1));
 
         jLabel3.setText("Tanggal Penjualan");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 40, -1, -1));
@@ -149,6 +153,11 @@ Statement cn;
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 31, -1, -1));
 
         kode_barang.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Data Barang" }));
+        kode_barang.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                kode_barangItemStateChanged(evt);
+            }
+        });
         jPanel1.add(kode_barang, new org.netbeans.lib.awtextra.AbsoluteConstraints(106, 28, 160, -1));
 
         jLabel6.setText("Nama Barang");
@@ -195,6 +204,12 @@ Statement cn;
 
         jLabel10.setText("Sub Total");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
+
+        txt_subtotal.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txt_subtotalCaretUpdate(evt);
+            }
+        });
         jPanel1.add(txt_subtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 140, -1));
 
         btn_additem.setText("ADD ITEM");
@@ -240,13 +255,13 @@ Statement cn;
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 330, 750, 170));
 
-        btn_tambah.setText("ADD NEW");
-        btn_tambah.addActionListener(new java.awt.event.ActionListener() {
+        btn_addnew.setText("ADD NEW");
+        btn_addnew.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_tambahActionPerformed(evt);
+                btn_addnewActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_tambah, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
+        getContentPane().add(btn_addnew, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
 
         btn_savetransaction.setText("SAVE TRANSACTION");
         getContentPane().add(btn_savetransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
@@ -271,6 +286,11 @@ Statement cn;
         jLabel13.setText("Total Rp");
         getContentPane().add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 580, -1, -1));
 
+        txt_bayar.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txt_bayarCaretUpdate(evt);
+            }
+        });
         txt_bayar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txt_bayarActionPerformed(evt);
@@ -380,12 +400,20 @@ Statement cn;
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nofakturActionPerformed
 
-    private void id_petugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_id_petugasActionPerformed
+    private void IDPetugasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDPetugasActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_id_petugasActionPerformed
+    }//GEN-LAST:event_IDPetugasActionPerformed
 
     private void btn_hitungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_hitungActionPerformed
-
+      // TODO add your handling code here:
+        int a;
+        int b;
+        double c;   
+           a = Integer.parseInt(txt_hargajual.getText());
+           b = Integer.parseInt(txt_jumlah.getText());
+           c = a * b; 
+        txt_subtotal.setText(String.valueOf(c));
+    
     }//GEN-LAST:event_btn_hitungActionPerformed
 
     private void btn_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariActionPerformed
@@ -417,9 +445,9 @@ Statement cn;
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_bayarActionPerformed
 
-    private void btn_tambahActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambahActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn_tambahActionPerformed
+    private void btn_addnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addnewActionPerformed
+
+    }//GEN-LAST:event_btn_addnewActionPerformed
 
     private void txt_namabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namabarangActionPerformed
         // TODO add your handling code here:
@@ -441,7 +469,7 @@ Statement cn;
      tableModel.setRowCount(0); 
    //  NoFaktur.setText(""); 
      txt_namapetugas.setText(""); 
-     id_petugas.setSelectedIndex(0); 
+     IDPetugas.setSelectedIndex(0); 
      kode_barang.setSelectedIndex(0); 
      txt_namabarang.setText("");    
      txt_hargajual.setText(""); 
@@ -464,7 +492,7 @@ Statement cn;
      public void SetEditOff(){ 
      txt_nofaktur.setEnabled(false); 
      txt_tanggalpenjualan.setEnabled(false); 
-     id_petugas.setEnabled(false); 
+     IDPetugas.setEnabled(false); 
      kode_barang.setEnabled(false); 
      txt_jumlah.setEnabled(false); 
      btn_hitung.setEnabled(false); 
@@ -475,7 +503,7 @@ Statement cn;
      public void SetEditOn(){ 
      txt_nofaktur.setEnabled(true); 
      txt_tanggalpenjualan.setEnabled(true); 
-     id_petugas.setEnabled(true); 
+     IDPetugas.setEnabled(true); 
      kode_barang.setEnabled(true); 
      txt_jumlah.setEnabled(true); 
      btn_savetransaction.setEnabled(true); 
@@ -485,18 +513,82 @@ Statement cn;
      }  
      
      
-    private void id_petugasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_id_petugasItemStateChanged
+    private void IDPetugasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_IDPetugasItemStateChanged
     try {      
     koneksi();
-    String     SQL = "SELECT * FROM tblpetugas where idpetugas='"+ 
-    id_petugas.getSelectedItem().toString()+"'"; 
+    String     SQL = "SELECT * FROM tb_petugas where id_petugas='"+ 
+    IDPetugas.getSelectedItem().toString()+"'"; 
     ResultSet  res = cn.executeQuery(SQL); 
     res.absolute(1); 
-    NamaPetugas.setText(res.getString("namapetugas")); 
+    txt_namapetugas.setText(res.getString("nama_petugas")); 
         } catch (SQLException ex) { 
         }                
-    }//GEN-LAST:event_id_petugasItemStateChanged
+    }//GEN-LAST:event_IDPetugasItemStateChanged
 
+    
+    private void kode_barangItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_kode_barangItemStateChanged
+         // TODO add your handling code here:
+          try {      
+        koneksi();
+        String     SQL = "SELECT * FROM tb_barang where kodebarang='"+ 
+        kode_barang.getSelectedItem().toString()+"'"; 
+        ResultSet  res = cn.executeQuery(SQL); 
+        res.absolute(1); 
+        txt_namabarang.setText(res.getString("namabarang")); 
+        txt_hargajual.setText(res.getString("hargajual")); 
+        txt_stok.setText(res.getString("stok")); 
+        } catch (SQLException ex) { 
+        } 
+         txt_jumlah.requestFocus(); 
+         btn_additem.setEnabled(true); 
+         
+    }//GEN-LAST:event_kode_barangItemStateChanged
+
+    private void txt_subtotalCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_subtotalCaretUpdate
+ // TODO add your handling code here:
+              double d, e;   
+            d = Double.parseDouble(txt_subtotal.getText());  
+            e = Double.parseDouble(txt_total.getText());  
+            e = e+d;   
+            txt_total.setText(String.valueOf(e)); 
+    }//GEN-LAST:event_txt_subtotalCaretUpdate
+
+    private void txt_bayarCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txt_bayarCaretUpdate
+       double a; 
+       double b; 
+       double c;  
+            a = Double.parseDouble(txt_bayar.getText());  
+            b = Double.parseDouble(txt_total.getText()); 
+            c = a - b;   
+            txt_sisa.setText(String.valueOf(c)); 
+ 
+    
+    }//GEN-LAST:event_txt_bayarCaretUpdate
+
+     public void TampilComboBarang(){
+         try {    
+         koneksi ();
+         String     SQL = "SELECT * FROM tb_barang";
+        ResultSet  res = cn.executeQuery(SQL);
+        while(res.next()){
+        kode_barang.addItem(res.getString("kodebarang"));
+       }
+        } catch (SQLException ex) {
+        }
+    }
+    
+     
+     public void TampilComboPetugas(){ 
+        try {      
+        koneksi ();
+        String     SQL = "SELECT * FROM tb_petugas"; 
+        ResultSet  res = cn.executeQuery(SQL); 
+        while(res.next()){ 
+            IDPetugas.addItem(res.getString("id_petugas")); 
+     } 
+        } catch (SQLException ex) { 
+        } 
+    }   
     /**
      * @param args the command line arguments
      */
@@ -533,15 +625,15 @@ Statement cn;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> IDPetugas;
     private javax.swing.JTable TabelPenjualan;
     private javax.swing.JButton btn_additem;
+    private javax.swing.JButton btn_addnew;
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_cari;
     private javax.swing.JButton btn_close;
     private javax.swing.JButton btn_hitung;
     private javax.swing.JButton btn_savetransaction;
-    private javax.swing.JButton btn_tambah;
-    private javax.swing.JComboBox<String> id_petugas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
