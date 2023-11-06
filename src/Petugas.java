@@ -45,8 +45,8 @@ public class Petugas extends javax.swing.JFrame {
         model.fireTableDataChanged();
         
         TxtPetugas.setModel(model);
-        model.addColumn("ID PETUGAS");
-        model.addColumn("NAMA PETUGAS");
+        model.addColumn("ID");
+        model.addColumn("NAMA");
         model.addColumn("ALAMAT");
         model.addColumn("EMAIL");
         model.addColumn("TELEPON"); 
@@ -62,7 +62,7 @@ public class Petugas extends javax.swing.JFrame {
                 model.addRow(new Object[]{
                     r.getString(1),
                     r.getString(2),
-                    r.getDate(3),
+                    r.getString(3),
                     r.getString(4),
                     r.getString(5)
                 });
@@ -160,6 +160,11 @@ public class Petugas extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        TxtPetugas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TxtPetugasMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(TxtPetugas);
 
         BtnSave.setBackground(new java.awt.Color(255, 255, 153));
@@ -196,6 +201,11 @@ public class Petugas extends javax.swing.JFrame {
 
         BtnClose.setBackground(new java.awt.Color(255, 255, 153));
         BtnClose.setText("CLOSE");
+        BtnClose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCloseActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -377,7 +387,7 @@ public class Petugas extends javax.swing.JFrame {
          try{
             Connection c = Koneksi.getKoneksi();
             
-            String sql = "UPDATE tbl_petugas SET , nama = ?,  alamat = ?, email = ?  , telepon = ?  WHERE id = ?";
+            String sql = "UPDATE tbl_petugas SET , nama_petugas = ?,  alamat_petugas = ?, email = ?  , telepon = ?  WHERE id = ?";
             
             PreparedStatement p = c.prepareStatement(sql);
             
@@ -401,8 +411,33 @@ public class Petugas extends javax.swing.JFrame {
 
     private void BtnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelActionPerformed
         // TODO add your handling code here:
-       
+       kosong();
     }//GEN-LAST:event_BtnCancelActionPerformed
+
+    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
+        // TODO add your handling code here:
+        dispose();
+    }//GEN-LAST:event_BtnCloseActionPerformed
+
+    private void TxtPetugasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TxtPetugasMouseClicked
+        // TODO add your handling code here:
+         int baris = TxtPetugas.getSelectedRow();
+        
+        if(baris == -1){
+            return;
+        }
+        
+        String id = TxtPetugas.getValueAt(baris, 0).toString();
+        TxtID.setText(id);
+        String nama = TxtPetugas.getValueAt(baris, 1).toString();
+        TxtNama.setText(nama);
+        String alamat = TxtPetugas.getValueAt(baris, 2).toString();
+        TxtAlamat.setText(alamat);
+        String email = TxtPetugas.getValueAt(baris, 3).toString();
+        TxtEmail.setText(email);
+        String telepon = TxtPetugas.getValueAt(baris, 4).toString();
+        TxtTelepon.setText(telepon);
+    }//GEN-LAST:event_TxtPetugasMouseClicked
 
     /**
      * @param args the command line arguments
