@@ -37,8 +37,8 @@ Statement cn;
         this.setLocation((screenSize.width - frameSize.width) / 2,
         (screenSize.height = screenSize.height) / 10);
       
-        table.setModel(tableModel);
-        Tabel(table, new int[]{90,300,90,60,60,90});
+        TabelPenjualan.setModel(tableModel);
+        Tabel(TabelPenjualan, new int[]{90,300,90,60,60,90});
         setDefaultTable();
         TanggalOtomatis();
         SetEditOff();
@@ -47,7 +47,6 @@ Statement cn;
         tampilfaktur();
     }
         
-
     public void TanggalOtomatis(){
       Date tanggal = new Date();
       txt_tanggalpenjualan.setText(""+ (String.format("%1$td/%1$tb/%1$tY",tanggal)));
@@ -520,6 +519,41 @@ Statement cn;
         tampilfaktur();
         
     }//GEN-LAST:event_btn_addnewActionPerformed
+    public void tampilfaktur() {
+ //  Date tanggal = new Date();
+ //  String kode;
+ //  NoFaktur.setText(""+ (String.format("%1$tY%1$tm%1$td",tanggal)));
+
+        Date sk = new Date();
+
+        SimpleDateFormat format1=new SimpleDateFormat("yyMMdd");
+        String time = format1.format(sk);
+        koneksi();
+        String sql = "select right(nofaktur,1) as kd from tb_penjualan order by kd desc";
+
+        try{
+       try (ResultSet rs = cn.executeQuery(sql)) {
+           if (rs.next()){
+              
+               int kode = Integer.parseInt(rs.getString("kd"))+1;
+              
+               txt_nofaktur.setText(time+Integer.toString(kode));
+              
+           }else{
+              
+               int kode = 1;
+              
+               txt_nofaktur.setText(time+Integer.toString(kode));
+              
+           }
+       }
+
+        }catch (SQLException | NumberFormatException e){
+
+            JOptionPane.showMessageDialog(null, e);
+
+        }     
+       }
 
     private void txt_namabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namabarangActionPerformed
         // TODO add your handling code here:
@@ -588,11 +622,11 @@ Statement cn;
     private void IDPetugasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_IDPetugasItemStateChanged
     try {      
     koneksi();
-    String     SQL = "SELECT * FROM tb_petugas where id_petugas='"+ 
+    String     SQL = "SELECT * FROM tb_petugas where idpetugas='"+ 
     IDPetugas.getSelectedItem().toString()+"'"; 
     ResultSet  res = cn.executeQuery(SQL); 
     res.absolute(1); 
-    txt_namapetugas.setText(res.getString("nama_petugas")); 
+    txt_namapetugas.setText(res.getString("namapetugas")); 
         } catch (SQLException ex) { 
         }                
     }//GEN-LAST:event_IDPetugasItemStateChanged
