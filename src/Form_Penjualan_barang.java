@@ -446,7 +446,12 @@ Statement cn;
     }//GEN-LAST:event_txt_bayarActionPerformed
 
     private void btn_addnewActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addnewActionPerformed
-
+      
+        SetEditOn(); 
+        BersihData();
+        txt_nofaktur.requestFocus();  
+        tampilfaktur();
+        
     }//GEN-LAST:event_btn_addnewActionPerformed
 
     private void txt_namabarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_namabarangActionPerformed
