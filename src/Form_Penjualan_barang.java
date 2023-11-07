@@ -1,13 +1,9 @@
 
-import javax.swing.table.DefaultTableModel;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.Connection;
-import javax.swing.JOptionPane;
-import java.util.Date;
+import javax.swing.*; 
+import java.awt.*; 
+import java.sql.*; 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -264,6 +260,11 @@ Statement cn;
         getContentPane().add(btn_addnew, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 530, -1, -1));
 
         btn_savetransaction.setText("SAVE TRANSACTION");
+        btn_savetransaction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_savetransactionActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_savetransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
 
         btn_cancel.setText("CANCEL");
@@ -437,7 +438,47 @@ Statement cn;
     }//GEN-LAST:event_txt_totalActionPerformed
 
     private void btn_additemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_additemActionPerformed
-       
+// TODO add your handling code here:
+        String NM=txt_nofaktur.getText(); 
+        String KB=kode_barang.getSelectedItem().toString(); 
+        String JM=txt_jumlah.getText(); 
+         
+        if ((NM.isEmpty()) | (KB.isEmpty()) |(JM.isEmpty())) { 
+            JOptionPane.showMessageDialog(null,"data tidak boleh kosong, silahkan dilengkapi"); 
+            kode_barang.requestFocus(); 
+        }else { 
+             
+            try { 
+                koneksi();
+                try (Statement stt = conn.createStatement()) {
+                    String     SQL = "insert into tb_detail_penjualan values('"+txt_nofaktur.getText()+"',"+
+                            "'"+kode_barang.getSelectedItem()+"',"+
+                            "'"+txt_jumlah.getText()+"',"+
+                            "'"+txt_subtotal.getText()+"')";
+                    stt.executeUpdate(SQL);
+                    
+                    koneksi();
+                    Statement  stt1 = conn.createStatement();
+                    String     SQL1 = "Update tblbarang Set stok=stok - '"+txt_jumlah.getText()+"'" +
+                            "Where kodebarang='"+kode_barang.getSelectedItem().toString()+"'";
+                    stt1.executeUpdate(SQL1);
+                    data[0] = kode_barang.getSelectedItem().toString();
+                    data[1] = txt_namabarang.getText();
+                    data[2] = txt_hargajual.getText();
+                    data[3] = txt_stok.getText();
+                    data[4] = txt_jumlah.getText();
+                    data[5] = txt_subtotal.getText();
+                    tableModel.insertRow(0, data);
+                } 
+                conn.close(); 
+                kode_barang.requestFocus(); 
+                btn_additem.setEnabled(false); 
+                BersihDetail(); 
+                kode_barang.requestFocus(); 
+            } catch (Exception ex) { 
+                System.err.println(ex.getMessage()); 
+            } 
+        }        
     }//GEN-LAST:event_btn_additemActionPerformed
 
     
@@ -570,6 +611,36 @@ Statement cn;
     
     }//GEN-LAST:event_txt_bayarCaretUpdate
 
+    private void btn_savetransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_savetransactionActionPerformed
+   // TODO add your handling code here:
+          String NM=txt_nofaktur.getText(); 
+         
+        if ((NM.isEmpty())) { 
+            JOptionPane.showMessageDialog(null,"data tidak boleh kosong, silahkan dilengkapi"); 
+            txt_nofaktur.requestFocus(); 
+        }else { 
+             
+            try { 
+               koneksi (); 
+                String     SQL = "insert into tblpenjualan values('"+txt_nofaktur.getText()+"',"+ 
+                        "'"+txt_tanggalpenjualan.getText()+"',"+ 
+                        "'"+IDPetugas.getSelectedItem()+"',"+ 
+                        "'"+txt_bayar.getText()+"',"+ 
+                        "'"+txt_sisa.getText()+"',"+ 
+                        "'"+txt_total.getText()+"')";  
+                cn.executeUpdate(SQL); 
+                cn.close(); 
+                conn.close(); 
+                BersihData(); 
+                SetEditOff(); 
+                btn_savetransaction.setEnabled(false); 
+            } catch (Exception ex) { 
+                System.err.println(ex.getMessage()); 
+            } 
+        }
+
+    }//GEN-LAST:event_btn_savetransactionActionPerformed
+
      public void TampilComboBarang(){
          try {    
          koneksi ();
@@ -594,6 +665,17 @@ Statement cn;
         } catch (SQLException ex) { 
         } 
     }   
+     
+     public void koneksi(){
+    try{
+        Class.forName("com.mysql.jdbc.Driver");
+        conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_penjualan_barang_pas_xiia","root","");
+        cn = conn.createStatement();
+    }catch (ClassNotFoundException | SQLException e){
+        JOptionPane.showMessageDialog(null,"koneksi gagal..");
+         JOptionPane.showMessageDialog(null,e.getMessage());
+        }
+    } 
     /**
      * @param args the command line arguments
      */
