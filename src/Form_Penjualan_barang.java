@@ -4,6 +4,7 @@ import java.awt.*;
 import java.sql.*; 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.table.DefaultTableModel;
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
@@ -268,6 +269,11 @@ Statement cn;
         getContentPane().add(btn_savetransaction, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 530, -1, -1));
 
         btn_cancel.setText("CANCEL");
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
         getContentPane().add(btn_cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 530, -1, -1));
 
         btn_close.setText("CLOSE");
@@ -418,11 +424,31 @@ Statement cn;
     }//GEN-LAST:event_btn_hitungActionPerformed
 
     private void btn_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariActionPerformed
-        // TODO add your handling code here:
+  // TODO add your handling code here:
+        try { 
+        koneksi ();
+        String     SQL = "SELECT * FROM tb_penjualan where nofaktur='"+txt_nofaktur.getText()+"'"; 
+        ResultSet  res = cn.executeQuery(SQL); 
+        res.absolute(1); 
+        TampilGridDetail(); 
+        txt_tanggalpenjualan.setText(res.getString("tglpenjualan")); 
+        IDPetugas.setSelectedItem(res.getString("idpetugas")); 
+        txt_bayar.setText(res.getString("bayar")); 
+        txt_sisa.setText(res.getString("sisa")); 
+        txt_total.setText(res.getString("total")); 
+        btn_savetransaction.setEnabled(false); 
+        txt_nofaktur.setEnabled(false); 
+        btn_cari.setEnabled(false); 
+        } catch (SQLException ex) { 
+        } 
     }//GEN-LAST:event_btn_cariActionPerformed
 
     private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
-        // TODO add your handling code here:
+// TODO add your handling code here:
+         if(JOptionPane.showConfirmDialog(null,"This application will be close \n if you press button OK","Information",JOptionPane.OK_CANCEL_OPTION,JOptionPane.INFORMATION_MESSAGE)==JOptionPane.OK_OPTION) 
+        this.dispose();
+//           new FrmMenu().setVisible(true);
+    
     }//GEN-LAST:event_btn_closeActionPerformed
 
     private void txt_tanggalpenjualanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_tanggalpenjualanActionPerformed
@@ -640,6 +666,11 @@ Statement cn;
         }
 
     }//GEN-LAST:event_btn_savetransactionActionPerformed
+
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+       BersihData(); 
+        SetEditOff(); 
+    }//GEN-LAST:event_btn_cancelActionPerformed
 
      public void TampilComboBarang(){
          try {    
