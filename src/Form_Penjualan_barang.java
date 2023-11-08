@@ -571,6 +571,7 @@ Statement cn;
         
                        
     }//GEN-LAST:event_TabelPenjualanMouseClicked
+  
     public void BersihData(){ 
      tableModel.setRowCount(0); 
    //  NoFaktur.setText(""); 
@@ -617,7 +618,6 @@ Statement cn;
      btn_hitung.setEnabled(true); 
      btn_additem.setEnabled(true); 
      }  
-     
      
     private void IDPetugasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_IDPetugasItemStateChanged
     try {      
