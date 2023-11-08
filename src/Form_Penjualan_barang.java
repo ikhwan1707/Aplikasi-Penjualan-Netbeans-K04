@@ -351,10 +351,10 @@ Statement cn;
     try { 
     koneksi();
     String     SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual," +               
-                    "tblbarang.stok,tbldetailpenjualan.jumlah,tbldetailpenjualan.subtotal,tblpenjualan.nofaktur " + 
-                     "FROM tblbarang,tbldetailpenjualan,tblpenjualan WHERE tblbarang.kodebarang=tbldetailpenjualan.kodebarang " + 
-                    "AND tb_penjualan.nofaktur=tbldetailpenjualan.nofaktur" + 
-                     "AND tbldetailpenjualan.nofaktur='"+txt_nofaktur.getText()+"'"; 
+                    "tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.nofaktur " + 
+                     "FROM tblbarang,tb_detail_penjualan,tb_penjualan WHERE tblbarang.kodebarang=tb_detail_penjualan.kodebarang " + 
+                    "AND tb_penjualan.nofaktur=tb_detail_penjualan.nofaktur" + 
+                     "AND tb_detail_penjualan.nofaktur='"+txt_nofaktur.getText()+"'"; 
       try (ResultSet res = cn.executeQuery(SQL)) {
           while(res.next()){
               data[0] = res.getString(1);
@@ -379,11 +379,11 @@ Statement cn;
     try {
         koneksi();
         String     SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual,"
-                         +"tblbarang.stok,tbldetailpenjualan.jumlah,tbldetailpenjualan.subtotal,tblpenjualan.nofaktur " +
-                         "FROM tblbarang, tbldetailpenjualan, tblpenjualan " +
-                         "WHERE tblbarang.kodebarang=tbldetailpenjualan.kodebarang " +
-                         "AND tblpenjualan.nofaktur=tbldetailpenjualan.nofaktur " +
-                         "AND tbldetailpenjualan.nofaktur='" + txt_nofaktur.getText() + "'";
+                         +"tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.nofaktur " +
+                         "FROM tblbarang, tb_detail_penjualan, tb_penjualan " +
+                         "WHERE tblbarang.kodebarang=tb_detail_penjualan.kodebarang " +
+                         "AND tb_penjualan.nofaktur=tb_detail_penjualan.nofaktur " +
+                         "AND tb_detail_penjualan.nofaktur='" + txt_nofaktur.getText() + "'";
       try (ResultSet res = cn.executeQuery(SQL)) {
           while(res.next()){
               data[0] = res.getString(1);
