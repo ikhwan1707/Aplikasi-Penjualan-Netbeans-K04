@@ -1,4 +1,3 @@
-
 import javax.swing.*; 
 import java.awt.*; 
 import java.sql.*; 
@@ -733,7 +732,7 @@ Statement cn;
      
      public void koneksi(){
     try{
-        Class.forName("com.mysql.jdbc.Driver");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_penjualan_barang_pas_xiia","root","");
         cn = conn.createStatement();
     }catch (ClassNotFoundException | SQLException e){
