@@ -417,10 +417,10 @@ Statement cn;
      public void TampilComboPetugas(){ 
         try {      
         koneksi ();
-        String     SQL = "SELECT * FROM tb_petugas"; 
+        String     SQL = "SELECT * FROM tbl_petugas"; 
         ResultSet  res = cn.executeQuery(SQL); 
         while(res.next()){ 
-            IDPetugas.addItem(res.getString("IDPetugas")); 
+            IDPetugas.addItem(res.getString("id_petugas")); 
      } 
         } catch (SQLException ex) { 
         } 
@@ -455,7 +455,7 @@ Statement cn;
         res.absolute(1); 
         TampilGridDetail(); 
         txt_tanggalpenjualan.setText(res.getString("tglpenjualan")); 
-        IDPetugas.setSelectedItem(res.getString("idpetugas")); 
+        IDPetugas.setSelectedItem(res.getString("id_petugas")); 
         txt_bayar.setText(res.getString("bayar")); 
         txt_sisa.setText(res.getString("sisa")); 
         txt_total.setText(res.getString("total")); 
@@ -642,11 +642,11 @@ Statement cn;
     private void IDPetugasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_IDPetugasItemStateChanged
     try {      
     koneksi();
-    String     SQL = "SELECT * FROM tb_petugas where IDPetugas='"+ 
+    String     SQL = "SELECT * FROM tbl_petugas where id_petugas='"+ 
     IDPetugas.getSelectedItem().toString()+"'"; 
     ResultSet  res = cn.executeQuery(SQL); 
     res.absolute(1); 
-    txt_namapetugas.setText(res.getString("namapetugas")); 
+    txt_namapetugas.setText(res.getString("nama_petugas")); 
         } catch (SQLException ex) { 
         }                
     }//GEN-LAST:event_IDPetugasItemStateChanged
