@@ -483,7 +483,7 @@ Statement cn;
                     
                     koneksi();
                     Statement  stt1 = conn.createStatement();
-                    String     SQL1 = "Update tblbarang Set stok=stok - '"+txt_jumlah.getText()+"'" +
+                    String     SQL1 = "Update tb_barang Set stok=stok - '"+txt_jumlah.getText()+"'" +
                             "Where KodeBarang='"+kode_barang.getSelectedItem().toString()+"'";
                     stt1.executeUpdate(SQL1);
                     data[0] = kode_barang.getSelectedItem().toString();
