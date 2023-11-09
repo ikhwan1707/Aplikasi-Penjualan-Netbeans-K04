@@ -26,7 +26,7 @@ public class FormBarangMasuk extends javax.swing.JFrame {
         if(frameSize.height > screenSize.height){ 
             frameSize.height=screenSize.height; 
         } 
-        if(frameSize.width > screenSize.width){ 
+        if(frameSize.width > screenSize.width){                     
             frameSize.width=screenSize.width; 
         } 
         this.setLocation((screenSize.width - frameSize.width) / 2, 
@@ -76,8 +76,8 @@ public class FormBarangMasuk extends javax.swing.JFrame {
                   "tbl_barang.stok,tbl_detailbarangmasuk.jumlah,tbl_detailbarangmasuk.subtotal,tbl_baranggmasuk.no_nota " + 
                   "FROM tblbarang,tbldetailbrgmasuk,tblbrgmasuk " +
                   "WHERE tbl_barang.kode_barang=tbl_detailbarangmasuk.kode_barang " +
-                  "AND tblbrgmasuk.nonota=tbldetailbrgmasuk.nonota" +
-                  "AND tbl_detailbarangmasuk.nonota="+txtnota.getText()+"";
+                  "AND tblbrgmasuk.no_nota=tbldetailbrgmasuk.no_nota" +
+                  "AND tbl_detailbarangmasuk.no_nota="+txtnota.getText()+"";
      
       try (ResultSet res = cn.executeQuery(SQL)) {
           while(res.next()){
@@ -95,6 +95,7 @@ public class FormBarangMasuk extends javax.swing.JFrame {
       }catch (Exception ex) { 
             System.err.println(ex.getMessage()); 
         } 
+}
      
      private void TampilGridDetail(){
         String stat =""; 
@@ -104,7 +105,7 @@ public class FormBarangMasuk extends javax.swing.JFrame {
                              "FROM tbl_barang,tbl_detailbarangmasuk,tbl_barangmasuk WHERE tbl_barang.kode_barang=tbl_detailbarangmasuk.kode_barang " + 
                              "AND tbl_barangmasuk.no_nota=tbl_detailbarangmasuk.no_nota AND tbl_detailbarangmasuk.no_nota='"+txtnota.getText()+"'"; 
       
-          try (ResultSet res = cn.executeQuery(SQL)) {
+          try (ResultSet res = cn.executeQuery(SQL)){
           while(res.next()){
               data[0] = res.getString(1);
               data[1] = res.getString(2);
@@ -118,9 +119,10 @@ public class FormBarangMasuk extends javax.swing.JFrame {
            } 
             cn.close(); 
             conn.close(); 
-        } catch (Exception ex) { 
+        }catch (Exception ex) { 
             System.err.println(ex.getMessage()); 
-        } 
+        }
+     
      } 
      
      public void BersihData(){ 
