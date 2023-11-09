@@ -7,15 +7,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
-
-
 /**
  *
  * @author lab-4
  */
 public class Koneksi {
-    public static Connection koneksi;
+      public static Connection koneksi;
     
     public static Connection getKoneksi(){
         
@@ -24,7 +21,7 @@ public class Koneksi {
         {
             
     try {
-    String url = "jdbc:mysql://localhost:3306/db_penjualan_barang_pas_xiia";
+    String url = "jdbc:mysql://localhost:3306/crud_sederhana_xiia";
     String user ="root";
     String password = "";
     DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
@@ -38,3 +35,5 @@ public class Koneksi {
         return koneksi;
 }
 }
+    
+
