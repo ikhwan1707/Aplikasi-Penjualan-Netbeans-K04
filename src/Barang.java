@@ -426,7 +426,7 @@ if (baris == -1) {
 
         try {
             String sql = "SELECT b.*, j.Jenis AS NamaJenis FROM tblbarang b JOIN tbljenis j ON b.KodeJenis = j.KodeJenis";
-            Connection c = koneksi.getKoneksi();
+            Connection c = Koneksi.getKoneksi();
             Statement s = c.createStatement();
             ResultSet r = s.executeQuery(sql);
 
@@ -452,7 +452,7 @@ if (baris == -1) {
     private void KdJenis() {
         try {
             String sql = "SELECT * FROM tbljenis";
-            Connection c = koneksi.getKoneksi();
+            Connection c = Koneksi.getKoneksi();
             Statement s = c.createStatement();
             ResultSet r = s.executeQuery(sql);
             
