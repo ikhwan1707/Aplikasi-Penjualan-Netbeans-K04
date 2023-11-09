@@ -200,7 +200,7 @@ public class Barang extends javax.swing.JFrame {
         }else{
             try {
                 Connection c = Koneksi.getKoneksi();
-                String sql = "INSERT INTO tbl_barang VALUES(?,?,?,?,?,?)";
+                String sql = "INSERT INTO tblbarang VALUES(?,?,?,?,?,?)";
                 PreparedStatement p = c.prepareStatement(sql);
                 p.setString(1, kode);
                 p.setString(2, nama);   
