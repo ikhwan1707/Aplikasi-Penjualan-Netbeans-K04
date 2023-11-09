@@ -349,11 +349,11 @@ Statement cn;
     String stat =""; 
     try { 
     koneksi();
-    String SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual," +               
-                    "tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.nofaktur " + 
+    String SQL = "SELECT tblbarang.KodeBarang,tblbarang.NamaBarang,tblbarang.HargaJual," +               
+                    "tblbarang.stok,tb_detail_penjualan.Jumlah,tb_detail_penjualan.SubTotal,tb_penjualan.NoFaktur " + 
                      "FROM tblbarang,tb_detail_penjualan,tb_penjualan WHERE tblbarang.KodeBarang=tb_detail_penjualan.KodeBarang " + 
-                    "AND tb_penjualan.nofaktur = tb_detail_penjualan.nofaktur" + 
-                     "AND tb_detail_penjualan.nofaktur= '"+txt_nofaktur.getText()+"'"; 
+                    "AND tb_penjualan.NoFaktur = tb_detail_penjualan.NOFaktur" + 
+                     "AND tb_detail_penjualan.NoFaktur= '"+txt_nofaktur.getText()+"'"; 
       try (ResultSet res = cn.executeQuery(SQL)) {
           while(res.next()){
               data[0] = res.getString(1);
@@ -376,8 +376,8 @@ Statement cn;
     String stat ="";
     try {
         koneksi();
-        String     SQL = "SELECT tblbarang.KodeBarang,tblbarang.namabarang,tblbarang.hargajual,"
-                         +"tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.NoFaktur " +
+        String     SQL = "SELECT tblbarang.KodeBarang,tblbarang.NamaBarang,tblbarang.Hargajual,"
+                         +"tblbarang.Stok,tb_detail_penjualan.Jumlah,tb_detail_penjualan.SubTotal,tb_penjualan.NoFaktur " +
                          "FROM tblbarang, tb_detail_penjualan, tb_penjualan " +
                          "WHERE tblbarang.KodeBarang = tb_detail_penjualan.KodeBarang " +
                          "AND tb_penjualan.NoFaktur = tb_detail_penjualan.NoFaktur " +
@@ -404,7 +404,7 @@ Statement cn;
      public void TampilComboBarang(){
          try {    
          koneksi ();
-         String     SQL = "SELECT * FROM tb_barang";
+         String     SQL = "SELECT * FROM tblbarang";
         ResultSet  res = cn.executeQuery(SQL);
         while(res.next()){
         kode_barang.addItem(res.getString("KodeBarang"));
@@ -507,7 +507,7 @@ Statement cn;
                     
                     koneksi();
                     Statement  stt1 = conn.createStatement();
-                    String     SQL1 = "Update tb_barang Set stok=stok - '"+txt_jumlah.getText()+"'" +
+                    String     SQL1 = "Update tblbarang Set Stok=Stok - '"+txt_jumlah.getText()+"'" +
                             "Where KodeBarang='"+kode_barang.getSelectedItem().toString()+"'";
                     stt1.executeUpdate(SQL1);
                     data[0] = kode_barang.getSelectedItem().toString();
@@ -655,13 +655,13 @@ Statement cn;
          // TODO add your handling code here:
           try {      
         koneksi();
-        String     SQL = "SELECT * FROM tb_barang where KodeBarang='"+ 
+        String     SQL = "SELECT * FROM tblbarang where KodeBarang='"+ 
         kode_barang.getSelectedItem().toString()+"'"; 
         ResultSet  res = cn.executeQuery(SQL); 
         res.absolute(1); 
-        txt_namabarang.setText(res.getString("namabarang")); 
-        txt_hargajual.setText(res.getString("hargajual")); 
-        txt_stok.setText(res.getString("stok")); 
+        txt_namabarang.setText(res.getString("NamaBarang")); 
+        txt_hargajual.setText(res.getString("HargaJual")); 
+        txt_stok.setText(res.getString("Stok")); 
         } catch (SQLException ex) { 
         } 
          txt_jumlah.requestFocus(); 
