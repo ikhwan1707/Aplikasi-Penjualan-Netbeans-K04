@@ -372,17 +372,16 @@ Statement cn;
         } 
     } 
 
-    
     private void TampilGridDetail(){
     String stat ="";
     try {
         koneksi();
         String     SQL = "SELECT tblbarang.KodeBarang,tblbarang.namabarang,tblbarang.hargajual,"
-                         +"tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.nofaktur " +
+                         +"tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.NoFaktur " +
                          "FROM tblbarang, tb_detail_penjualan, tb_penjualan " +
                          "WHERE tblbarang.KodeBarang = tb_detail_penjualan.KodeBarang " +
-                         "AND tb_penjualan.nofaktur = tb_detail_penjualan.nofaktur " +
-                         "AND tb_detail_penjualan.nofaktur='" + txt_nofaktur.getText() + "'";
+                         "AND tb_penjualan.NoFaktur = tb_detail_penjualan.NoFaktur " +
+                         "AND tb_detail_penjualan.NoFaktur='" + txt_nofaktur.getText() + "'";
       try (ResultSet res = cn.executeQuery(SQL)) {
           while(res.next()){
               data[0] = res.getString(1);
