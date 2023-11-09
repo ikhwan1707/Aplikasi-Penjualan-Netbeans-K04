@@ -38,4 +38,3 @@ public class Koneksi {
         return koneksi;
 }
 }
-
