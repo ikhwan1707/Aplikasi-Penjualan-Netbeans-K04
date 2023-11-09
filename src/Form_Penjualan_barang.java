@@ -319,7 +319,7 @@ Statement cn;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private javax.swing.table.DefaultTableModel tableModel=getDefaultTabelModel(); 
+   private javax.swing.table.DefaultTableModel tableModel=getDefaultTabelModel(); 
      
      private void Tabel(javax.swing.JTable tb, int lebar[] ) { 
         tb.setAutoResizeMode(TabelPenjualan.AUTO_RESIZE_OFF); 
@@ -401,6 +401,31 @@ Statement cn;
         }   
   } 
     
+    
+     public void TampilComboBarang(){
+         try {    
+         koneksi ();
+         String     SQL = "SELECT * FROM tb_barang";
+        ResultSet  res = cn.executeQuery(SQL);
+        while(res.next()){
+        kode_barang.addItem(res.getString("KodeBarang"));
+       }
+        } catch (SQLException ex) {
+        }
+    }
+    
+     public void TampilComboPetugas(){ 
+        try {      
+        koneksi ();
+        String     SQL = "SELECT * FROM tb_petugas"; 
+        ResultSet  res = cn.executeQuery(SQL); 
+        while(res.next()){ 
+            IDPetugas.addItem(res.getString("IDPetugas")); 
+     } 
+        } catch (SQLException ex) { 
+        } 
+    }   
+     
     private void txt_nofakturActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_nofakturActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txt_nofakturActionPerformed
@@ -519,10 +544,6 @@ Statement cn;
         
     }//GEN-LAST:event_btn_addnewActionPerformed
     public void tampilfaktur() {
- //  Date tanggal = new Date();
- //  String kode;
- //  NoFaktur.setText(""+ (String.format("%1$tY%1$tm%1$td",tanggal)));
-
         Date sk = new Date();
 
         SimpleDateFormat format1=new SimpleDateFormat("yyMMdd");
@@ -666,8 +687,6 @@ Statement cn;
             b = Double.parseDouble(txt_total.getText()); 
             c = a - b;   
             txt_sisa.setText(String.valueOf(c)); 
- 
-    
     }//GEN-LAST:event_txt_bayarCaretUpdate
 
     private void btn_savetransactionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_savetransactionActionPerformed
@@ -705,31 +724,6 @@ Statement cn;
         SetEditOff(); 
     }//GEN-LAST:event_btn_cancelActionPerformed
 
-     public void TampilComboBarang(){
-         try {    
-         koneksi ();
-         String     SQL = "SELECT * FROM tb_barang";
-        ResultSet  res = cn.executeQuery(SQL);
-        while(res.next()){
-        kode_barang.addItem(res.getString("KodeBarang"));
-       }
-        } catch (SQLException ex) {
-        }
-    }
-    
-     
-     public void TampilComboPetugas(){ 
-        try {      
-        koneksi ();
-        String     SQL = "SELECT * FROM tb_petugas"; 
-        ResultSet  res = cn.executeQuery(SQL); 
-        while(res.next()){ 
-            IDPetugas.addItem(res.getString("IDPetugas")); 
-     } 
-        } catch (SQLException ex) { 
-        } 
-    }   
-     
      public void koneksi(){
     try{
         Class.forName("com.mysql.cj.jdbc.Driver");
