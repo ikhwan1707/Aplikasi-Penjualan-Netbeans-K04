@@ -349,7 +349,7 @@ Statement cn;
     String stat =""; 
     try { 
     koneksi();
-    String     SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual," +               
+    String SQL = "SELECT tblbarang.kodebarang,tblbarang.namabarang,tblbarang.hargajual," +               
                     "tblbarang.stok,tb_detail_penjualan.jumlah,tb_detail_penjualan.subtotal,tb_penjualan.NoFaktur " + 
                      "FROM tblbarang,tb_detail_penjualan,tb_penjualan WHERE tblbarang.KodeBarang=tb_detail_penjualan.KodeBarang " + 
                     "AND tb_penjualan.NoFaktur = tb_detail_penjualan.NoFaktur" + 
