@@ -1,3 +1,4 @@
+
 import javax.swing.*; 
 import java.awt.*; 
 import java.sql.*; 
@@ -25,19 +26,19 @@ Statement cn;
      */
     public Form_Penjualan_barang() {
         initComponents();
-          Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
-        Dimension frameSize=this.getSize();
-        if(frameSize.height > screenSize.height){
-            frameSize.height=screenSize.height;
-        }
-        if(frameSize.width > screenSize.width){
-            frameSize.width=screenSize.width;
-        }
-        this.setLocation((screenSize.width - frameSize.width) / 2,
-        (screenSize.height = screenSize.height) / 10);
-      
-        TabelPenjualan.setModel(tableModel);
-        Tabel(TabelPenjualan, new int[]{90,300,90,60,60,90});
+//          Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize();
+//        Dimension frameSize=this.getSize();
+//        if(frameSize.height > screenSize.height){
+//            frameSize.height=screenSize.height;
+//        }
+//        if(frameSize.width > screenSize.width){
+//            frameSize.width=screenSize.width;
+//        }
+//        this.setLocation((screenSize.width - frameSize.width) / 2,
+//        (screenSize.height = screenSize.height) / 10);
+//      
+//        TabelPenjualan.setModel(tableModel);
+//        Tabel(TabelPenjualan, new int[]{90,300,90,60,60,90});
         setDefaultTable();
         TanggalOtomatis();
         SetEditOff();
@@ -376,7 +377,7 @@ Statement cn;
     String stat ="";
     try {
         koneksi();
-        String     SQL = "SELECT tblbarang.KodeBarang,tblbarang.NamaBarang,tblbarang.Hargajual,"
+        String   SQL = "SELECT tblbarang.KodeBarang,tblbarang.NamaBarang,tblbarang.Hargajual,"
                          +"tblbarang.Stok,tb_detail_penjualan.Jumlah,tb_detail_penjualan.SubTotal,tb_penjualan.NoFaktur " +
                          "FROM tblbarang, tb_detail_penjualan, tb_penjualan " +
                          "WHERE tblbarang.KodeBarang = tb_detail_penjualan.KodeBarang " +
@@ -447,22 +448,22 @@ Statement cn;
 
     private void btn_cariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cariActionPerformed
   // TODO add your handling code here:
-        try { 
-        koneksi ();
-        String     SQL = "SELECT * FROM tb_penjualan where NoFaktur='"+txt_nofaktur.getText()+"'"; 
-        ResultSet  res = cn.executeQuery(SQL); 
-        res.absolute(1); 
-        TampilGridDetail(); 
-        txt_tanggalpenjualan.setText(res.getString("tglpenjualan")); 
-        IDPetugas.setSelectedItem(res.getString("id_petugas")); 
-        txt_bayar.setText(res.getString("bayar")); 
-        txt_sisa.setText(res.getString("sisa")); 
-        txt_total.setText(res.getString("total")); 
-        btn_savetransaction.setEnabled(false); 
-        txt_nofaktur.setEnabled(false); 
-        btn_cari.setEnabled(false); 
-        } catch (SQLException ex) { 
-        } 
+//        try { 
+//        koneksi ();
+//        String     SQL = "SELECT * FROM tb_penjualan where NoFaktur='"+txt_nofaktur.getText()+"'"; 
+//        ResultSet  res = cn.executeQuery(SQL); 
+//        res.absolute(1); 
+//        TampilGridDetail(); 
+//        txt_tanggalpenjualan.setText(res.getString("tglpenjualan")); 
+//        IDPetugas.setSelectedItem(res.getString("id_petugas")); 
+//        txt_bayar.setText(res.getString("bayar")); 
+//        txt_sisa.setText(res.getString("sisa")); 
+//        txt_total.setText(res.getString("total")); 
+//        btn_savetransaction.setEnabled(false); 
+//        txt_nofaktur.setEnabled(false); 
+//        btn_cari.setEnabled(false); 
+//        } catch (SQLException ex) { 
+//        } 
     }//GEN-LAST:event_btn_cariActionPerformed
 
     private void btn_closeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_closeActionPerformed
@@ -542,6 +543,7 @@ Statement cn;
         tampilfaktur();
         
     }//GEN-LAST:event_btn_addnewActionPerformed
+    
     public void tampilfaktur() {
         Date sk = new Date();
 
