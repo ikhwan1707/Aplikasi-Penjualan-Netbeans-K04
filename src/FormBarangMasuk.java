@@ -8,6 +8,7 @@ import java.awt.*;
 import java.sql.*; 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.JOptionPane;
 /**
  *
  * @author lab-4
@@ -21,7 +22,7 @@ public class FormBarangMasuk extends javax.swing.JFrame {
      */
     public FormBarangMasuk() {
         initComponents();
-         Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize(); 
+        Dimension screenSize=Toolkit.getDefaultToolkit().getScreenSize(); 
         Dimension frameSize=this.getSize(); 
         if(frameSize.height > screenSize.height){ 
             frameSize.height=screenSize.height; 
@@ -101,9 +102,9 @@ public class FormBarangMasuk extends javax.swing.JFrame {
         String stat =""; 
         try { 
         koneksi();
-                String SQL = "SELECT tbl_barang.kode_barang,tbl_barang.nama_barang,tbl_barang.harga_jual, tbl_barang.stok,tbl_detailbarangmasuk.jumlah,tbl_detailbarangmasuk.subtotal,tbl_barangmasuk.no_nota " + 
-                             "FROM tbl_barang,tbl_detailbarangmasuk,tbl_barangmasuk WHERE tbl_barang.kode_barang=tbl_detailbarangmasuk.kode_barang " + 
-                             "AND tbl_barangmasuk.no_nota=tbl_detailbarangmasuk.no_nota AND tbl_detailbarangmasuk.no_nota='"+txtnota.getText()+"'"; 
+            String SQL = "SELECT tbl_barang.kode_barang,tbl_barang.nama_barang,tbl_barang.harga_jual, tbl_barang.stok,tbl_detailbarangmasuk.jumlah,tbl_detailbarangmasuk.subtotal,tbl_barangmasuk.no_nota " + 
+                         "FROM tbl_barang,tbl_detailbarangmasuk,tbl_barangmasuk WHERE tbl_barang.kode_barang=tbl_detailbarangmasuk.kode_barang " + 
+                         "AND tbl_barangmasuk.no_nota=tbl_detailbarangmasuk.no_nota AND tbl_detailbarangmasuk.no_nota='"+txtnota.getText()+"'"; 
       
           try (ResultSet res = cn.executeQuery(SQL)){
           while(res.next()){
@@ -178,7 +179,7 @@ public class FormBarangMasuk extends javax.swing.JFrame {
       
        public void koneksi(){
         try{
-            Class.forName("com.mysql.jdbc.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_penjualan_barang_pas_xiia","root","");
             cn = conn.createStatement();
         }catch (ClassNotFoundException | SQLException e){
@@ -268,28 +269,22 @@ public void TanggalOtomatis(){
         jLabel15 = new javax.swing.JLabel();
         txtsubtotal = new javax.swing.JTextField();
         btntambahitem = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tbbarangmasuk = new javax.swing.JTable();
         btntambahbaru = new javax.swing.JButton();
         btnsimpan = new javax.swing.JButton();
         btnclose = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         txttotal = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbbarangmasuk = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("FORM BARANG MASUK");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(271, 14, -1, -1));
 
         jLabel2.setText("Tanggal Barang Masuk");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 60, -1, -1));
-        getContentPane().add(TanggalMasuk, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 57, 160, -1));
 
         jLabel3.setText("No. Nota");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 94, -1, -1));
-        getContentPane().add(txtnota, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 91, 82, -1));
 
         btncari.setText("Cari Data");
         btncari.addActionListener(new java.awt.event.ActionListener() {
@@ -297,10 +292,8 @@ public void TanggalOtomatis(){
                 btncariActionPerformed(evt);
             }
         });
-        getContentPane().add(btncari, new org.netbeans.lib.awtextra.AbsoluteConstraints(252, 91, -1, -1));
 
         jLabel4.setText("ID Petugas");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 138, -1, -1));
 
         combopetugas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Petugas" }));
         combopetugas.addItemListener(new java.awt.event.ItemListener() {
@@ -308,14 +301,10 @@ public void TanggalOtomatis(){
                 combopetugasItemStateChanged(evt);
             }
         });
-        getContentPane().add(combopetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 132, 498, -1));
 
         jLabel5.setText("Nama Petugas");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 160, -1, -1));
-        getContentPane().add(txtnamapetugas, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 160, 498, -1));
 
         jLabel6.setText("ID Distributor");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 191, -1, -1));
 
         combodistributor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pilih Distributor" }));
         combodistributor.addItemListener(new java.awt.event.ItemListener() {
@@ -323,15 +312,10 @@ public void TanggalOtomatis(){
                 combodistributorItemStateChanged(evt);
             }
         });
-        getContentPane().add(combodistributor, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 188, 178, -1));
 
         jLabel7.setText("Nama Distributor");
-        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 225, -1, -1));
-        getContentPane().add(txtnamadistributor, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 222, 498, -1));
 
         jLabel8.setText("Kota Asal");
-        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 259, -1, -1));
-        getContentPane().add(txtkota, new org.netbeans.lib.awtextra.AbsoluteConstraints(164, 256, 498, -1));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Detail Barang Masuk"));
 
@@ -448,10 +432,31 @@ public void TanggalOtomatis(){
                     .addComponent(txtsubtotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(btntambahitem)
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 296, -1, -1));
+        btntambahbaru.setText("Tambah Baru");
+        btntambahbaru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btntambahbaruActionPerformed(evt);
+            }
+        });
+
+        btnsimpan.setText("SImpan Transaksi");
+        btnsimpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsimpanActionPerformed(evt);
+            }
+        });
+
+        btnclose.setText("Close");
+        btnclose.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncloseActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setText("Total Rp");
 
         tbbarangmasuk.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -471,35 +476,130 @@ public void TanggalOtomatis(){
         });
         jScrollPane1.setViewportView(tbbarangmasuk);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 496, 695, 137));
-
-        btntambahbaru.setText("Tambah Baru");
-        btntambahbaru.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btntambahbaruActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btntambahbaru, new org.netbeans.lib.awtextra.AbsoluteConstraints(18, 651, 125, -1));
-
-        btnsimpan.setText("SImpan Transaksi");
-        btnsimpan.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsimpanActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnsimpan, new org.netbeans.lib.awtextra.AbsoluteConstraints(149, 651, 205, -1));
-
-        btnclose.setText("Close");
-        btnclose.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncloseActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnclose, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 651, -1, -1));
-
-        jLabel16.setText("Total Rp");
-        getContentPane().add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(438, 654, -1, -1));
-        getContentPane().add(txttotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(487, 651, 226, -1));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(260, 260, 260))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(6, 6, 6)
+                                .addComponent(TanggalMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(78, 78, 78)
+                                .addComponent(txtnota, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(6, 6, 6)
+                                .addComponent(btncari))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(70, 70, 70)
+                                .addComponent(combopetugas, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(49, 49, 49)
+                                .addComponent(txtnamapetugas, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(56, 56, 56)
+                                .addComponent(combodistributor, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(35, 35, 35)
+                                .addComponent(txtnamadistributor, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(77, 77, 77)
+                                .addComponent(txtkota, javax.swing.GroupLayout.PREFERRED_SIZE, 498, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(btntambahbaru, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnsimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnclose)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel16)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txttotal)))
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 14, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel2))
+                    .addComponent(TanggalMasuk, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel3))
+                    .addComponent(txtnota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btncari))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel4))
+                    .addComponent(combopetugas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(txtnamapetugas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel6))
+                    .addComponent(combodistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel7))
+                    .addComponent(txtnamadistributor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel8))
+                    .addComponent(txtkota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btntambahbaru)
+                    .addComponent(btnsimpan)
+                    .addComponent(btnclose)
+                    .addComponent(jLabel16)
+                    .addComponent(txttotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(15, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
